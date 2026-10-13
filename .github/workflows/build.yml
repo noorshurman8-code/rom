@@ -14,13 +14,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y bc build-essential ccache curl git gperf libxml2-utils zip
 
-      - name: Clone Device Tree and Build Tools
+      - name: Clone Device Tree
         run: |
-          echo "Cloning SM-A750F device tree and initializing compilation..."
-          git clone https://github.com/minimal-manifest-twrp/android_device_samsung_a7y18nte.git -b twrp-9.0 device/samsung/a7y18nte
+          mkdir -p device/samsung
+          git clone --depth=1 https://github.com/minimal-manifest-twrp/android_device_samsung_a7y18nte.git -b twrp-9.0 device/samsung/a7y18nte
 
-      - name: Upload Recovery Artifact
+      - name: Compress and Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: TWRP_SM-A750F
+          name: TWRP_Device_Tree_SM-A750F
           path: device/samsung/a7y18nte/
