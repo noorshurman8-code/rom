@@ -1,4 +1,4 @@
-name: Build LineageOS for Samsung A7 2018 (SM-A750F)
+name: Build Android 16 ROM for Samsung A7 (SM-A750F)
 on:
   workflow_dispatch:
 
@@ -27,14 +27,10 @@ jobs:
           chmod a+x ~/bin/repo
           echo "$HOME/bin" >> $GITHUB_PATH
 
-      - name: Initialize and Sync LineageOS Source with SM-A750F Tree
+      - name: Initialize Android 16 Source & Device Tree
         run: |
-          mkdir lineage && cd lineage
-          repo init -u https://github.com/LineageOS/android.git -b lineage-17.1 --git-lfs --depth=1
+          mkdir android16 && cd android16
+          repo init -u https://github.com/LineageOS/android.git -b lineage-23.0 --git-lfs --depth=1 || repo init -u https://android.googlesource.com/platform/manifest -b main --depth=1
           
-          # إضافة شجرة الجهاز الخاصة بـ SM-A750F داخل مجلد السورس
-          mkdir -p device/samsung
-          git clone https://github.com/LineageOS/android_device_samsung_a7y18nte.git -b lineage-17.1 device/samsung/a7y18nte || true
-          
-          # سحب الملفات الأساسية
-          repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --optimized-fetch --prune
+          mkdir -p device/samsung/a7y18nte
+          git clone https://github.com/minimal-manifest-twrp/android_device_samsung_a7y18nte.git -b twrp-9.0 device/samsung/a7y18nte || true
