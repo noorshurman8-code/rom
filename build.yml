@@ -1,6 +1,6 @@
-name: Build Android 16 ROM for Galaxy A7 2018
+.github/workflows/build.yml
 
-on:
+on:name: Build Android 16 ROM for Galaxy A7 2018
   workflow_dispatch:
 
 jobs:
