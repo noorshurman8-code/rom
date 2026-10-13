@@ -16,17 +16,17 @@ jobs:
 
       - name: Download Device Tree Source
         run: |
-          mkdir -p device/samsung
+          mkdir -p device/samsung/a7y18nte
           curl -sL https://github.com/minimal-manifest-twrp/android_device_samsung_a7y18nte/archive/refs/heads/twrp-9.0.zip -o sm-a750f.zip
           unzip -q sm-a750f.zip
-          mv android_device_samsung_a7y18nte-twrp-9.0 device/samsung/a7y18nte
+          cp -r android_device_samsung_a7y18nte-twrp-9.0/* device/samsung/a7y18nte/
 
-      - name: Confirm Build Path
+      - name: Confirm Files
         run: |
-          ls -R device/samsung/a7y18nte
+          ls -la device/samsung/a7y18nte/
 
-      - name: Upload Logs as Artifact
+      - name: Upload Device Tree Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: SM-A750F_Build_Preparation_Logs
-          path: device/samsung/a7y18nte/Android.mk
+          name: SM-A750F_Device_Tree
+          path: device/samsung/a7y18nte/
