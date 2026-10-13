@@ -1,10 +1,20 @@
-name: Build Samsung A7 ROM
+name: Fast TWRP Build for SM-A750F
 on:
   workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Start Build
-        run: echo "Starting build for Samsung Galaxy A7..."
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Prepare Environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git wget zip gzip
+
+      - name: Download Toolchain and Setup
+        run: |
+          echo "Setting up fast build environment for Samsung Galaxy A7 2018 (SM-A750F)..."
+          # هنا يتم وضع روابط السكربت السريع الخاص بريكفري الجهاز
