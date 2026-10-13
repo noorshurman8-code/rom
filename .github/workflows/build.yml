@@ -1,4 +1,4 @@
-name: TWRP Build for Samsung A7 2018 (SM-A750F)
+name: Fixed TWRP Build for SM-A750F
 on:
   workflow_dispatch:
 
@@ -9,18 +9,24 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Build Environment
+      - name: Set up Environment
         run: |
           sudo apt-get update
-          sudo apt-get install -y bc build-essential ccache curl git gperf libxml2-utils zip
+          sudo apt-get install -y bc build-essential curl unzip
 
-      - name: Clone Device Tree
+      - name: Download Device Tree Source
         run: |
           mkdir -p device/samsung
-          git clone --depth=1 https://github.com/minimal-manifest-twrp/android_device_samsung_a7y18nte.git -b twrp-9.0 device/samsung/a7y18nte
+          curl -sL https://github.com/minimal-manifest-twrp/android_device_samsung_a7y18nte/archive/refs/heads/twrp-9.0.zip -o sm-a750f.zip
+          unzip -q sm-a750f.zip
+          mv android_device_samsung_a7y18nte-twrp-9.0 device/samsung/a7y18nte
 
-      - name: Compress and Upload Artifact
+      - name: Confirm Build Path
+        run: |
+          ls -R device/samsung/a7y18nte
+
+      - name: Upload Logs as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: TWRP_Device_Tree_SM-A750F
-          path: device/samsung/a7y18nte/
+          name: SM-A750F_Build_Preparation_Logs
+          path: device/samsung/a7y18nte/Android.mk
