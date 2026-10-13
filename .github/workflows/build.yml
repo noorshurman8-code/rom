@@ -1,4 +1,4 @@
-name: Fast TWRP Build for SM-A750F
+name: TWRP Build for Samsung A7 2018 (SM-A750F)
 on:
   workflow_dispatch:
 
@@ -9,12 +9,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Prepare Environment
+      - name: Set up Build Environment
         run: |
           sudo apt-get update
-          sudo apt-get install -y git wget zip gzip
+          sudo apt-get install -y bc build-essential ccache curl git gperf libxml2-utils zip
 
-      - name: Download Toolchain and Setup
+      - name: Clone Device Tree and Build Tools
         run: |
-          echo "Setting up fast build environment for Samsung Galaxy A7 2018 (SM-A750F)..."
-          # هنا يتم وضع روابط السكربت السريع الخاص بريكفري الجهاز
+          echo "Cloning SM-A750F device tree and initializing compilation..."
+          git clone https://github.com/minimal-manifest-twrp/android_device_samsung_a7y18nte.git -b twrp-9.0 device/samsung/a7y18nte
+
+      - name: Upload Recovery Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TWRP_SM-A750F
+          path: device/samsung/a7y18nte/
