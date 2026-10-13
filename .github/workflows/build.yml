@@ -1,0 +1,10 @@
+name: Build Samsung A7 ROM
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Start Build
+        run: echo "Starting build for Samsung Galaxy A7..."
