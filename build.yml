@@ -1,5 +1,5 @@
+https://github.com/LineageOS/android.git
 name: Build ROM for Galaxy A7 2018
-
 on:
   workflow_dispatch:
 
