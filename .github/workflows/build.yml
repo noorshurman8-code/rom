@@ -27,7 +27,14 @@ jobs:
           chmod a+x ~/bin/repo
           echo "$HOME/bin" >> $GITHUB_PATH
 
-      - name: Initialize LineageOS Source
+      - name: Initialize and Sync LineageOS Source with SM-A750F Tree
         run: |
           mkdir lineage && cd lineage
           repo init -u https://github.com/LineageOS/android.git -b lineage-17.1 --git-lfs --depth=1
+          
+          # إضافة شجرة الجهاز الخاصة بـ SM-A750F داخل مجلد السورس
+          mkdir -p device/samsung
+          git clone https://github.com/LineageOS/android_device_samsung_a7y18nte.git -b lineage-17.1 device/samsung/a7y18nte || true
+          
+          # سحب الملفات الأساسية
+          repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --optimized-fetch --prune
