@@ -34,3 +34,9 @@ jobs:
           
           mkdir -p device/samsung/a7y18nte
           git clone https://github.com/minimal-manifest-twrp/android_device_samsung_a7y18nte.git -b twrp-9.0 device/samsung/a7y18nte || true
+
+      - name: Start Compilation
+        run: |
+          echo "Compiling Android 16 ROM for SM-A750F..."
+          cd android16
+          source build/envsetup.sh || true
